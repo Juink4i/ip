@@ -19,7 +19,7 @@ public class Task {
         isDone = true;
     }
 
-    public void UndoTask() {
+    public void undoTask() {
         isDone = false;
     }
 
