@@ -10,33 +10,72 @@ public class jkbot {
         System.out.println(opening);
         Scanner scanner = new Scanner(System.in);
 
-        ArrayList<String> memory = new ArrayList<>();
+        ArrayList<Task> memory = new ArrayList<>();
 
         while (true) {
             System.out.print("input: ");
-            String text = scanner.nextLine();
+            String initText = scanner.nextLine();
+            String[] parts = initText.split(" ", 2);
+            String command = parts[0].toLowerCase();
 
-            if (text.equalsIgnoreCase("bye")) {
-                break;
-            }
+            switch (command) {
+                case "bye":
+                    System.out.println(closing);
+                    scanner.close();
+                    return;
 
-            if (text.equalsIgnoreCase("list")) {
-                System.out.println(line);
-                for (int i = 0; i < memory.size(); i++) {
-                    int index = i + 1;
-                    String printText = memory.get(i);
-                    System.out.println(index + ". " + printText + "\n");
-                }
-                System.out.println(line);
-            } else {
-                // include storing text into a list
-                memory.add(text);
-                System.out.println(line + "added: " + text + "\n" + line);
+                case "mark":
+                    if (parts.length > 1) {
+                        try {
+                            int taskIndex = Integer.parseInt(parts[1]) - 1; // Convert to 0-based index
+                            if (taskIndex >= 0 && taskIndex < memory.size()) {
+                                memory.get(taskIndex).doTask();
+                                System.out.println(line + "Good job for completing!!!\n"+ memory.get(taskIndex).getStatusIcon() + memory.get(taskIndex).getDesc() +"\n" + line);
+                            } else {
+                                System.out.println("Error: Invalid task number! Use 'list' to see available tasks.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Please enter a valid number!");
+                        }
+                    } else {
+                        System.out.println("Error: Please specify a task number: complete [number]");
+                    }
+                    break;
+
+                case "unmark":
+                    if (parts.length > 1) {
+                        try {
+                            int taskIndex = Integer.parseInt(parts[1]) - 1; // Convert to 0-based index
+                            if (taskIndex >= 0 && taskIndex < memory.size()) {
+                                memory.get(taskIndex).UndoTask();
+                                System.out.println(line + "You are undoing this task\n"+ memory.get(taskIndex).getStatusIcon() + memory.get(taskIndex).getDesc() +"\n" + line);
+                            } else {
+                                System.out.println("Error: Invalid task number! Use 'list' to see available tasks.");
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Please enter a valid number!");
+                        }
+                    } else {
+                        System.out.println("Error: Please specify a task number: complete [number]");
+                    }
+                    break;
+
+                case "list":
+                    System.out.println(line);
+
+                    for (int i = 0; i < memory.size(); i++) {
+                        int index = i + 1;
+                        String printIcon = memory.get(i).getStatusIcon();
+                        String printDesc = memory.get(i).getDesc();
+                        System.out.println(index + "."  + printIcon + " " + printDesc + "\n");
+                    }
+                    System.out.println(line);
+                    break;
+
+                default:
+                    memory.add(new Task(initText));
+                    System.out.println(line + "added: " + initText + "\n" + line);
             }
         }
-
-        System.out.println(closing);
-        scanner.close();
-
     }
 }
