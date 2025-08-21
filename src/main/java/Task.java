@@ -22,4 +22,9 @@ public class Task {
     public void UndoTask() {
         isDone = false;
     }
+
+    @Override
+    public String toString() {
+        return getStatusIcon() + getDesc();
+    }
 }

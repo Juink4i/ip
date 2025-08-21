@@ -14,7 +14,13 @@ public class jkbot {
 
         while (true) {
             System.out.print("input: ");
-            String initText = scanner.nextLine();
+            String initText = scanner.nextLine().trim();
+
+            // Skip empty input
+            if (initText.isEmpty()) {
+                continue;
+            }
+
             String[] parts = initText.split(" ", 2);
             String command = parts[0].toLowerCase();
 
@@ -27,10 +33,14 @@ public class jkbot {
                 case "mark":
                     if (parts.length > 1) {
                         try {
-                            int taskIndex = Integer.parseInt(parts[1]) - 1; // Convert to 0-based index
+                            int taskIndex = Integer.parseInt(parts[1]) - 1;
                             if (taskIndex >= 0 && taskIndex < memory.size()) {
                                 memory.get(taskIndex).doTask();
-                                System.out.println(line + "Good job for completing!!!\n"+ memory.get(taskIndex).getStatusIcon() + memory.get(taskIndex).getDesc() +"\n" + line);
+                                System.out.println(line +
+                                        "Good job for completing!!!\n" +
+                                        memory.get(taskIndex).toString() +
+                                        "\n" +
+                                        line);
                             } else {
                                 System.out.println("Error: Invalid task number! Use 'list' to see available tasks.");
                             }
@@ -38,17 +48,21 @@ public class jkbot {
                             System.out.println("Error: Please enter a valid number!");
                         }
                     } else {
-                        System.out.println("Error: Please specify a task number: complete [number]");
+                        System.out.println("Error: Please specify a task number: mark [number]");
                     }
                     break;
 
                 case "unmark":
                     if (parts.length > 1) {
                         try {
-                            int taskIndex = Integer.parseInt(parts[1]) - 1; // Convert to 0-based index
+                            int taskIndex = Integer.parseInt(parts[1]) - 1;
                             if (taskIndex >= 0 && taskIndex < memory.size()) {
                                 memory.get(taskIndex).UndoTask();
-                                System.out.println(line + "You are undoing this task\n"+ memory.get(taskIndex).getStatusIcon() + memory.get(taskIndex).getDesc() +"\n" + line);
+                                System.out.println(line +
+                                        "You are undoing this task\n"+
+                                        memory.get(taskIndex).toString() +
+                                        "\n" +
+                                        line);
                             } else {
                                 System.out.println("Error: Invalid task number! Use 'list' to see available tasks.");
                             }
@@ -56,25 +70,94 @@ public class jkbot {
                             System.out.println("Error: Please enter a valid number!");
                         }
                     } else {
-                        System.out.println("Error: Please specify a task number: complete [number]");
+                        System.out.println("Error: Please specify a task number: unmark [number]");
+                    }
+                    break;
+
+                case "todo":
+                    if (parts.length > 1) {
+                        String todoDescription = parts[1].trim();
+                        if (!todoDescription.isEmpty()) {
+                            Todo newTodo = new Todo(todoDescription);
+                            memory.add(newTodo);
+                            System.out.println(line);
+                            System.out.println("Got it. I've added this task:\n" + newTodo.toString() +
+                                    "\nNow you have " + memory.size() + " tasks in the list");
+                            System.out.println(line);
+                        } else {
+                            System.out.println("Error: Todo description cannot be empty!");
+                        }
+                    } else {
+                        System.out.println("Error: Please specify a todo description: todo [description]");
+                    }
+                    break;
+
+                case "deadline":
+                    if (parts.length > 1) {
+                        String deadlineInfo = parts[1];
+                        String[] dateParts = deadlineInfo.split("/by", 2);
+                        if (dateParts.length == 2) {
+                            String byDate = dateParts[1].trim();
+                            String desc = dateParts[0];
+
+                            if (!deadlineInfo.isEmpty()) {
+                                Deadline newDeadline = new Deadline(desc, byDate);
+                                memory.add(newDeadline);
+                                System.out.println(line);
+                                System.out.println("Got it. I've added this deadline:\n" + newDeadline.toString() +
+                                        "\nNow you have " + memory.size() + " tasks in the list");
+                            }
+
+                            System.out.println(line + "added deadline: " + deadlineInfo + "\n" + line);
+                        } else {
+                            System.out.println("Error: Please specify deadline details: deadline [description] /by [time]");
+                        }
+                    }
+                    break;
+
+                case "event":
+                    if (parts.length > 1) {
+                        String eventInfo = parts[1];
+                        String[] eventParts = eventInfo.split(" /from | /to ");
+
+                        if (eventParts.length == 3) {
+                            String desc = eventParts[0];
+                            String startTime = eventParts[1].trim();
+                            String endTime = eventParts[2].trim();
+
+                            if (!eventInfo.isEmpty()) {
+                                Event newEvent = new Event(desc, startTime, endTime);
+                                memory.add(newEvent);
+                                System.out.println(line);
+                                System.out.println("Got it. I've added this deadline:\n" + newEvent.toString() +
+                                        "\nNow you have " + memory.size() + " tasks in the list");
+                            }
+
+                            System.out.println(line + "added event: " + eventInfo + "\n" + line);
+                        } else {
+                            System.out.println("Error: Please specify event details: event [description] /from [start] /to [end]");
+                        }
                     }
                     break;
 
                 case "list":
                     System.out.println(line);
 
-                    for (int i = 0; i < memory.size(); i++) {
-                        int index = i + 1;
-                        String printIcon = memory.get(i).getStatusIcon();
-                        String printDesc = memory.get(i).getDesc();
-                        System.out.println(index + "."  + printIcon + " " + printDesc + "\n");
+                    if (memory.isEmpty()) {
+                        System.out.println("No tasks in your list yet!");
+                    } else {
+                        for (int i = 0; i < memory.size(); i++) {
+                            int index = i + 1;
+                            Task task = memory.get(i);
+                            System.out.println(index + ". " + task.toString());
+                        }
                     }
                     System.out.println(line);
                     break;
 
                 default:
-                    memory.add(new Task(initText));
-                    System.out.println(line + "added: " + initText + "\n" + line);
+                    // Check if it's a simple task without command
+                    System.out.println("Unrecognised command. Try again\n");
             }
         }
     }
