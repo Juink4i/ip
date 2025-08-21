@@ -54,6 +54,10 @@ public class jkbot {
                         handleList();
                         break;
 
+                    case "delete":
+                        handleDelete(parts);
+                        break;
+
                     default:
                         handleDefault(text);
                 }
@@ -201,6 +205,29 @@ public class jkbot {
             }
         }
         System.out.println(line);
+    }
+
+    private static void handleDelete(String[] parts) throws JkBotException {
+        if (parts.length < 2) {
+            throw new EmptyDescriptionException("Error: Please specify a task number: delete [number]");
+        }
+
+        int taskIndex = Integer.parseInt(parts[1].trim()) - 1;
+
+        if (taskIndex < 0 || taskIndex >= memory.size()) {
+            throw new InvalidTaskNumberException("Error: Invalid task number! Use 'list' to see available tasks");
+        }
+
+        // deleting the task
+        Task removedTask = memory.remove(taskIndex);
+        System.out.println(line);
+        System.out.println("I've removed this task:\n" +
+                            removedTask.toString() +
+                            "\nNow you have " +
+                            memory.size() +
+                            " tasks in the list");
+        System.out.println(line);
+
     }
 
     private static void handleDefault(String text) {
