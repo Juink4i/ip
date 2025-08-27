@@ -1,3 +1,5 @@
+package Jkbot.task;
+
 public class Deadline extends Task{
     String byDate;
 
@@ -14,4 +16,10 @@ public class Deadline extends Task{
     public String toString() {
         return "[D]" + super.toString() + "(by: " + this.byDate + ")";
     }
+
+    @Override
+    public String toFileFormat() {
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + byDate;
+    }
+
 }

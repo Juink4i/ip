@@ -1,15 +1,30 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+package Jkbot;
 
-public class jkbot {
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import Jkbot.exception.*;
+import Jkbot.task.*;
+
+public class Jkbot {
     public static String line = "_____________________________________________________________\n";
     public static String opening = line + "Hello! I'm jkbot\nWhat can I do for you?\n" + line;
     public static String closing = line + "Bye. Hope to see you again soon!" + "\n" + line;
+
+    private static final String FILE_PATH = "data/saved_tasks.txt";
+    public static final String DIRECTORY_PATH = "data";
 
     public static ArrayList<Task> memory = new ArrayList<>();
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        handleLoadTasks();
         System.out.println(opening);
 
         while (true) {
@@ -59,7 +74,7 @@ public class jkbot {
                         break;
 
                     default:
-                        handleDefault(text);
+                        handleDefault();
                 }
 
             } catch (JkBotException e) {
@@ -72,8 +87,96 @@ public class jkbot {
         }
     }
 
+    // Prints all task
+    private static void handleLoadTasks() {
+        try {
+            Path path = Paths.get(FILE_PATH);
+            if (!Files.exists(path)) {
+                return; // No file to load
+            }
+            List<String> lines = Files.readAllLines((path));
+            int corruptedLines = 0;
+
+            for (String line : lines) {
+                Task task = parseTask(line);
+                if (!line.isEmpty()) {
+                    // System.out.printf(line);
+                    if (task != null) {
+                        memory.add(task);
+                    } else {
+                        corruptedLines++;
+                    }
+                }
+            }
+            if (corruptedLines > 0) {
+                System.out.println("Loaded, system skip " + corruptedLines + "lines due to corruption.");
+            }
+            System.out.println("Loaded :)");
+
+        } catch (IOException e) {
+            System.out.println("File does not exist");
+        }
+    }
+
+    private static Task parseTask(String line) {
+        try {
+            String[] parts = line.split(" \\| ");
+            String type = parts[0];
+            boolean isDone = parts[1].equals("1");
+            String desc = parts[2];
+
+            Task task;
+            switch(type) {
+                case "T":
+                    task = new Todo(desc);
+                    break;
+                case "D":
+                    task = new Deadline(desc, parts[3]);
+                    break;
+                case "E":
+                    task = new Event(desc, parts[3], parts[4]);
+                    break;
+                default:
+                    return null;
+            }
+
+            if (isDone) {
+                task.doTask();
+            }
+            return task;
+
+        } catch (Exception e) {
+            System.out.println("Error parsing line: " + line);
+            return null;
+        }
+    }
+
+    // Saves all the task in a folder
+    private static void handleSaveTasks() {
+        try {
+            File directory = new File(DIRECTORY_PATH);
+
+            // handles if data file doesnt exist at the start
+            if (!directory.exists()) {
+                directory.mkdir();
+            }
+
+            // writes every line
+            FileWriter writer = new FileWriter(FILE_PATH);
+            for (Task task : memory) {
+                writer.write(task.toFileFormat() + "\n");
+            }
+            System.out.println("Saved! :)");
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error saving file");
+        }
+    }
+
+    // closes the app and saves the tasks
     private static void handleBye() {
         System.out.println(closing);
+        handleSaveTasks();
         scanner.close();
     }
 
@@ -230,7 +333,7 @@ public class jkbot {
 
     }
 
-    private static void handleDefault(String text) {
+    private static void handleDefault() {
         System.out.println("Unrecognised command. Try again\n");
     }
 }

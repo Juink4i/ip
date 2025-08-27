@@ -1,3 +1,5 @@
+package Jkbot.task;
+
 public class Event extends Task{
     String startTime;
     String endTime;
@@ -10,6 +12,11 @@ public class Event extends Task{
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + "(from: " + this.startTime + "to: " + this.endTime + ")";
+        return "[E]" + super.toString() + " (from: " + this.startTime + " to: " + this.endTime + ")";
+    }
+
+    @Override
+    public String toFileFormat() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + startTime + " | " + endTime;
     }
 }

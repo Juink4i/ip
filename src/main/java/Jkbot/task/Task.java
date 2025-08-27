@@ -1,4 +1,6 @@
-public class Task {
+package Jkbot.task;
+
+public abstract class Task {
     protected String description;
     protected boolean isDone;
 
@@ -23,8 +25,10 @@ public class Task {
         isDone = false;
     }
 
+    public abstract String toFileFormat();
+
     @Override
     public String toString() {
-        return getStatusIcon() + getDesc();
+        return getStatusIcon() + " " + getDesc();
     }
 }
