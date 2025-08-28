@@ -1,3 +1,5 @@
 T | 0 | help me
-E | 1 | meeting | 2pm | 4pm
-D | 0 | yutututu  |  6pm
+D | 0 | homework  | 28/8/2025 1500
+D | 0 | homework2  | 28/8/2025 1600
+D | 0 | homework3  | 28/8/2025 1430
+D | 0 | hw4  | 30/8/2025 1700

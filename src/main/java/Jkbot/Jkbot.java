@@ -3,6 +3,9 @@ package Jkbot;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import Jkbot.exception.*;
 import Jkbot.task.*;
+
 
 public class Jkbot {
     public static String line = "_____________________________________________________________\n";
@@ -71,6 +75,10 @@ public class Jkbot {
 
                     case "delete":
                         handleDelete(parts);
+                        break;
+
+                    case "show":
+                        handleTaskOnDate(parts);
                         break;
 
                     default:
@@ -156,7 +164,7 @@ public class Jkbot {
         try {
             File directory = new File(DIRECTORY_PATH);
 
-            // handles if data file doesnt exist at the start
+            // handles if data file does not exist at the start
             if (!directory.exists()) {
                 directory.mkdir();
             }
@@ -288,10 +296,10 @@ public class Jkbot {
         memory.add(newEvent);
         System.out.println(line);
         System.out.println("Got it. I've added this event:\n" +
-                            newEvent.toString() +
-                            "\nNow you have " +
-                            memory.size() +
-                            " tasks in the list");
+                newEvent.toString() +
+                "\nNow you have " +
+                memory.size() +
+                " tasks in the list");
         System.out.println(line);
     }
 
@@ -308,6 +316,46 @@ public class Jkbot {
             }
         }
         System.out.println(line);
+    }
+
+    private static void handleTaskOnDate(String[] parts) throws JkBotException {
+        if (parts.length < 2) {
+            throw new EmptyDescriptionException("Error: Please use - show d/M/yyyy");
+        }
+
+        LocalDate queryDate;
+        try {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+            queryDate = LocalDate.parse(parts[1].trim(), inputFormatter);
+        } catch (DateTimeParseException e) {
+            throw new InvalidFormatException("Invalid format! Please use - show d/M/yyyy, e.g., 28/8/2025");
+        }
+
+        boolean found = false;
+        System.out.println(line);
+        for (Task task : memory) {
+            if (task instanceof Deadline) {
+                Deadline d = (Deadline) task;
+                if (d.getByDate().toLocalDate().equals(queryDate)) {
+                    System.out.println(d.toString());
+                    found = true;
+                }
+            } else if (task instanceof Event) {
+                Event e = (Event) task;
+                LocalDate start = e.getStartTime().toLocalDate();
+                LocalDate end = e.getEndTime().toLocalDate();
+                if (!queryDate.isBefore(start) && !queryDate.isAfter(end)) {
+                    System.out.println(e.toString());
+                    found = true;
+                }
+            }
+        }
+
+        if (!found) {
+            System.out.println("No tasks/events found on " + queryDate);
+        }
+        System.out.println(line);
+
     }
 
     private static void handleDelete(String[] parts) throws JkBotException {
