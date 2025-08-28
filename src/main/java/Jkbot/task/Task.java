@@ -1,5 +1,9 @@
 package Jkbot.task;
 
+/**
+ * General task
+ * Contains methods and variables applicable to all sub category of task
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
