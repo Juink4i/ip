@@ -1,4 +1,4 @@
-package Jkbot;
+package Jkbot.utils;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -1,4 +1,4 @@
-package Jkbot;
+package Jkbot.utils;
 
 import Jkbot.Command.AddDeadlineCommand;
 import Jkbot.Command.AddEventCommand;

@@ -2,6 +2,10 @@ package Jkbot;
 
 import Jkbot.Command.Command;
 import Jkbot.exception.JkBotException;
+import Jkbot.utils.Parser;
+import Jkbot.utils.Storage;
+import Jkbot.utils.TaskList;
+import Jkbot.utils.Ui;
 
 /**
  * The main chatbot application class that coordinates all components.

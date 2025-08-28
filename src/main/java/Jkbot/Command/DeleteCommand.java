@@ -1,8 +1,8 @@
 package Jkbot.Command;
 
-import Jkbot.Storage;
-import Jkbot.TaskList;
-import Jkbot.Ui;
+import Jkbot.utils.Storage;
+import Jkbot.utils.TaskList;
+import Jkbot.utils.Ui;
 import Jkbot.exception.JkBotException;
 import Jkbot.task.Task;
 

@@ -1,4 +1,4 @@
-package Jkbot;
+package Jkbot.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
