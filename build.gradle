@@ -8,6 +8,14 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClass.set("Jkbot.Jkbot") // your full package + class name
+}
+
+shadowJar {
+    archiveFileName = 'Jkbot.jar'
+}
+
 dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.10.0'
@@ -27,7 +35,6 @@ test {
         showStandardStreams = false
     }
 }
-
 
 application {
     mainClass.set("seedu.duke.Duke")
