@@ -17,15 +17,15 @@ public class FindCommand implements Command{
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
-        int counter = 1;
+        int index = 1;
         if (tasks.isEmpty()) {
             ui.printMessage("No tasks in your list yet!");
         } else {
             System.out.print(Ui.LINE);
             for (int i = 0; i < tasks.size(); i++) {
                 if (tasks.getTask(i).getDescription().contains(query)) {
-                    ui.printMessage((counter) + ". " + tasks.getTask(i));
-                    counter++;
+                    ui.printMessage((index) + ". " + tasks.getTask(i));
+                    index++;
                 }
             }
         }
