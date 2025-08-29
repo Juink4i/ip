@@ -151,7 +151,7 @@ public class TaskList {
      * @throws EmptyDescriptionException if there is no description.
      */
     public void addEvent(String input) throws InvalidFormatException, EmptyDescriptionException {
-        String[] eventParts = input.split(" /from | /to ");
+        String eventParts[] = input.split(" /from | /to ");
         if (eventParts.length != 3) {
             throw new InvalidFormatException("Error: Use format - event [description] /from [start] /to [end]");
         }

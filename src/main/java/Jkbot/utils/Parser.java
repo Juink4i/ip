@@ -22,7 +22,7 @@ public class Parser {
             throw new EmptyDescriptionException("Empty command");
         }
 
-        String[] parts = input.split(" ", 2);
+        String parts[] = input.split(" ", 2);
         String command = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1] : "";
 
