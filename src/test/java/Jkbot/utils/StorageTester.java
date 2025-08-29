@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tester for Storage Class
 class StorageTest {
 
     private Storage storage;

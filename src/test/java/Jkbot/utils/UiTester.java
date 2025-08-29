@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.*;
 import java.io.*;
 
+// Tester for Ui Class
 class UiTest {
 
     private final PrintStream originalOut = System.out;
