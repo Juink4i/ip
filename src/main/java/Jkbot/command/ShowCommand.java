@@ -22,7 +22,9 @@ public class ShowCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         String result = tasks.getTasksOnDate(dateString);
+        System.out.print(Ui.LINE);
         ui.printMessage(result);
+        System.out.print(Ui.LINE);
     }
 
     @Override

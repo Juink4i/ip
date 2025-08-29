@@ -22,9 +22,11 @@ public class AddEventCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         tasks.addEvent(arguments);
+        System.out.println(Ui.LINE);
         ui.printMessage("Got it. I've added this event:\n" +
                 tasks.getTask(tasks.size() - 1).toString() +
                 "\nNow you have " + tasks.size() + " tasks in the list");
+        System.out.println(Ui.LINE);
     }
 
     @Override

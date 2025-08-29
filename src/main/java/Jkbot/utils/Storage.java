@@ -52,6 +52,7 @@ public class Storage {
             if (corruptedLines > 0) {
                 System.out.println("Loaded, system skip " + corruptedLines + "lines due to corruption.");
             }
+            System.out.print(Ui.LINE);
             System.out.println("Loaded :)");
 
         } catch (IOException e) {

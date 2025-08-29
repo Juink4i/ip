@@ -11,7 +11,9 @@ import Jkbot.exception.JkBotException;
 public class UnknownCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
-        ui.printMessage("Unrecognised command. Try again\n");
+        System.out.print(Ui.LINE);
+        ui.printMessage("Unrecognised command. Try again");
+        System.out.print(Ui.LINE);
     }
 
     @Override

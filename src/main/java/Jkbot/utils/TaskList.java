@@ -180,7 +180,8 @@ public class TaskList {
         try {
             queryDate = LocalDate.parse(dateString.trim(), inputFormatter);
         } catch (DateTimeParseException e) {
-            throw new InvalidFormatException("Invalid format! Please use - show d/M/yyyy, e.g., 28/8/2025");
+            System.out.print(Ui.LINE);
+            throw new InvalidFormatException("Invalid format! Please use - show d/M/yyyy, e.g., 28/8/2025\n" + Ui.LINE);
         }
 
         StringBuilder result = new StringBuilder();
@@ -205,7 +206,8 @@ public class TaskList {
         }
 
         if (!found) {
-            result.append("No tasks/events found on ").append(queryDate.format(inputFormatter));
+            System.out.print(Ui.LINE);
+            result.append("No tasks/events found on ").append(queryDate.format(inputFormatter) + "\n" + Ui.LINE);
         }
 
         return result.toString();

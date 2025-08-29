@@ -6,6 +6,7 @@ import Jkbot.command.AddTodoCommand;
 import Jkbot.command.Command;
 import Jkbot.command.DeleteCommand;
 import Jkbot.command.ExitCommand;
+import Jkbot.command.FindCommand;
 import Jkbot.command.ListCommand;
 import Jkbot.command.MarkCommand;
 import Jkbot.command.ShowCommand;
@@ -60,6 +61,10 @@ public class Parser {
             validateNotEmpty(arguments, "show d/M/yyyy");
             return new ShowCommand(arguments);
 
+        case "find":
+            validateNotEmpty(arguments, "find [key words]");
+            return new FindCommand(arguments);
+
         default:
             return new UnknownCommand();
         }
@@ -67,7 +72,8 @@ public class Parser {
 
     private static void validateNotEmpty(String arguments, String format) throws EmptyDescriptionException {
         if (arguments.trim().isEmpty()) {
-            throw new EmptyDescriptionException("Error: Please specify - " + format);
+            System.out.print(Ui.LINE);
+            throw new EmptyDescriptionException("Error: Please specify - " + format + "\n" + Ui.LINE);
         }
     }
 }

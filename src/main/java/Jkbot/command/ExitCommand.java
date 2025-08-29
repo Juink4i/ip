@@ -11,6 +11,7 @@ import Jkbot.exception.JkBotException;
 public class ExitCommand implements Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+        System.out.print(Ui.LINE);
         storage.saveTasks(tasks.getTasks());
         ui.printGoodbye();
     }
