@@ -1,4 +1,4 @@
-package Jkbot.Command;
+package Jkbot.command;
 
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
@@ -13,6 +13,10 @@ public class ShowCommand implements Command {
 
     public ShowCommand(String dateString) {
         this.dateString = dateString;
+    }
+
+    public String getDateString() {
+        return dateString;
     }
 
     @Override

@@ -1,16 +1,16 @@
 package Jkbot.utils;
 
-import Jkbot.Command.AddDeadlineCommand;
-import Jkbot.Command.AddEventCommand;
-import Jkbot.Command.AddTodoCommand;
-import Jkbot.Command.Command;
-import Jkbot.Command.DeleteCommand;
-import Jkbot.Command.ExitCommand;
-import Jkbot.Command.ListCommand;
-import Jkbot.Command.MarkCommand;
-import Jkbot.Command.ShowCommand;
-import Jkbot.Command.UnknownCommand;
-import Jkbot.Command.UnmarkCommand;
+import Jkbot.command.AddDeadlineCommand;
+import Jkbot.command.AddEventCommand;
+import Jkbot.command.AddTodoCommand;
+import Jkbot.command.Command;
+import Jkbot.command.DeleteCommand;
+import Jkbot.command.ExitCommand;
+import Jkbot.command.ListCommand;
+import Jkbot.command.MarkCommand;
+import Jkbot.command.ShowCommand;
+import Jkbot.command.UnknownCommand;
+import Jkbot.command.UnmarkCommand;
 import Jkbot.exception.JkBotException;
 import Jkbot.exception.EmptyDescriptionException;
 

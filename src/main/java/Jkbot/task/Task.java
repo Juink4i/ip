@@ -29,6 +29,14 @@ public abstract class Task {
         isDone = false;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public abstract String toFileFormat();
 
     @Override

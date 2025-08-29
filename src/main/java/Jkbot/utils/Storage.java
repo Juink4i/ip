@@ -98,7 +98,7 @@ public class Storage {
      * @throws ArrayIndexOutOfBoundsException if input doesn't have enough parts
      * @throws IllegalArgumentException if task type is unrecognized
      */
-    private Task parseTask(String input) {
+    Task parseTask(String input) {
         try {
             String parts[] = input.split(" \\| ");
             String type = parts[0];

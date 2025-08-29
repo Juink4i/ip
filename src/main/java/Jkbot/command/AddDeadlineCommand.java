@@ -1,4 +1,4 @@
-package Jkbot.Command;
+package Jkbot.command;
 
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
@@ -6,19 +6,24 @@ import Jkbot.utils.Ui;
 import Jkbot.exception.JkBotException;
 
 /**
- * Command to add a new event task.
+ * Command to add a new deadline task.
  */
-public class AddEventCommand implements Command {
-    private String arguments;
+public class AddDeadlineCommand implements Command {
+    private String input;
 
-    public AddEventCommand(String arguments) {
-        this.arguments = arguments;
+    public AddDeadlineCommand(String input) {
+        this.input = input;
     }
+
+    public String getInput() {
+        return input;
+    }
+
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
-        tasks.addEvent(arguments);
-        ui.printMessage("Got it. I've added this event:\n" +
+        tasks.addDeadline(input);
+        ui.printMessage("Got it. I've added this deadline:\n" +
                 tasks.getTask(tasks.size() - 1).toString() +
                 "\nNow you have " + tasks.size() + " tasks in the list");
     }

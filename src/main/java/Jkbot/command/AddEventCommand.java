@@ -1,4 +1,4 @@
-package Jkbot.Command;
+package Jkbot.command;
 
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
@@ -6,19 +6,23 @@ import Jkbot.utils.Ui;
 import Jkbot.exception.JkBotException;
 
 /**
- * Command to add a new todo task.
+ * Command to add a new event task.
  */
-public class AddTodoCommand implements Command {
-    private String description;
+public class AddEventCommand implements Command {
+    private String arguments;
 
-    public AddTodoCommand(String description) {
-        this.description = description;
+    public AddEventCommand(String arguments) {
+        this.arguments = arguments;
+    }
+
+    public String getArguments() {
+        return arguments;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
-        tasks.addTodo(description);
-        ui.printMessage("Got it. I've added this task:\n" +
+        tasks.addEvent(arguments);
+        ui.printMessage("Got it. I've added this event:\n" +
                 tasks.getTask(tasks.size() - 1).toString() +
                 "\nNow you have " + tasks.size() + " tasks in the list");
     }

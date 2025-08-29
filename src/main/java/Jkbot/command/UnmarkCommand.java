@@ -1,26 +1,28 @@
-package Jkbot.Command;
+package Jkbot.command;
 
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
 import Jkbot.utils.Ui;
 import Jkbot.exception.JkBotException;
-import Jkbot.task.Task;
 
 /**
- * Command to delete a task.
+ * Command to unmark a completed task.
  */
-public class DeleteCommand implements Command {
+public class UnmarkCommand implements Command {
     private int taskIndex;
 
-    public DeleteCommand(int taskIndex) {
+    public UnmarkCommand(int taskIndex) {
         this.taskIndex = taskIndex;
+    }
+
+    public int getIndex() {
+        return taskIndex;
     }
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
-        Task removedTask = tasks.deleteTask(taskIndex);
-        ui.printMessage("I've removed this task:\n" + removedTask.toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list");
+        tasks.unmarkTask(taskIndex);
+        ui.printMessage("You are undoing this task\n" + tasks.getTask(taskIndex).toString());
     }
 
     @Override

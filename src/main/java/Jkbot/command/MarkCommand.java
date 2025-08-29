@@ -1,4 +1,4 @@
-package Jkbot.Command;
+package Jkbot.command;
 
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
@@ -13,6 +13,10 @@ public class MarkCommand implements Command {
 
     public MarkCommand(int taskIndex) {
         this.taskIndex = taskIndex;
+    }
+
+    public int getIndex() {
+        return taskIndex;
     }
 
     @Override

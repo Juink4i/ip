@@ -176,8 +176,8 @@ public class TaskList {
      */
     public String getTasksOnDate(String dateString) throws InvalidFormatException {
         LocalDate queryDate;
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         try {
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
             queryDate = LocalDate.parse(dateString.trim(), inputFormatter);
         } catch (DateTimeParseException e) {
             throw new InvalidFormatException("Invalid format! Please use - show d/M/yyyy, e.g., 28/8/2025");
@@ -205,7 +205,7 @@ public class TaskList {
         }
 
         if (!found) {
-            result.append("No tasks/events found on ").append(queryDate);
+            result.append("No tasks/events found on ").append(queryDate.format(inputFormatter));
         }
 
         return result.toString();
