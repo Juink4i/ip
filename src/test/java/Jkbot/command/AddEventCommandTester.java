@@ -12,6 +12,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tester for AddEventCommand Class
 class AddEventCommandTest {
 
     private TaskList taskList;

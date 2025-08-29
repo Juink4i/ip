@@ -13,6 +13,7 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tester for AddToDoCommand Class
 class AddTodoCommandTest {
 
     private TaskList taskList;
