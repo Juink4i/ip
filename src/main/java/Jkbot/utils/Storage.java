@@ -108,17 +108,17 @@ public class Storage {
 
             Task task;
             switch(type) {
-                case "T":
-                    task = new Todo(desc);
-                    break;
-                case "D":
-                    task = new Deadline(desc, parts[3]);
-                    break;
-                case "E":
-                    task = new Event(desc, parts[3], parts[4]);
-                    break;
-                default:
-                    return null;
+            case "T":
+                task = new Todo(desc);
+                break;
+            case "D":
+                task = new Deadline(desc, parts[3]);
+                break;
+            case "E":
+                task = new Event(desc, parts[3], parts[4]);
+                break;
+            default:
+                return null;
             }
 
             if (isDone) {
