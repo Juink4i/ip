@@ -20,11 +20,14 @@ public class MarkCommand implements Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+        String message;
+
         tasks.markTask(taskIndex);
-        System.out.print(Ui.LINE);
-        ui.printMessage("Good job for completing!!!\n" + tasks.getTask(taskIndex).toString());
-        System.out.println(Ui.LINE);
+        storage.saveTasks(tasks.getTasks());
+        message = "Good job for completing!!!\n" + tasks.getTask(taskIndex).toString() + "\n";
+
+        return Ui.LINE + message + Ui.LINE;
     }
 
     @Override

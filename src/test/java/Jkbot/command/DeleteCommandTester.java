@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.DeleteCommand;
 import Jkbot.utils.TaskList;
@@ -38,17 +38,16 @@ class DeleteCommandTest {
     }
 
     @Test
-    void executeDeletesTaskAndPrintsMessage() throws JkBotException {
+    void executeDeletesTaskAndReturnsMessage() throws JkBotException {
         DeleteCommand command = new DeleteCommand(0);
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertEquals(1, taskList.size());
         assertEquals("Task 2", taskList.getTask(0).getDesc());
 
-        String output = outContent.toString();
-        assertTrue(output.contains("I've removed this task"));
-        assertTrue(output.contains("Task 1"));
-        assertTrue(output.contains("Now you have 1 tasks"));
+        assertTrue(result.contains("I've removed this task"));
+        assertTrue(result.contains("Task 1"));
+        assertTrue(result.contains("Now you have 1 tasks"));
     }
 
     @Test

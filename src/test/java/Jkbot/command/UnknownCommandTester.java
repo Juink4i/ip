@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.UnknownCommand;
 import Jkbot.utils.TaskList;
@@ -35,12 +35,10 @@ class UnknownCommandTest {
     }
 
     @Test
-    void executePrintsUnrecognisedMessage() throws JkBotException {
+    void executeReturnsUnrecognisedMessage() throws JkBotException {
         UnknownCommand command = new UnknownCommand();
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("Unrecognised command. Try again"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("Unrecognised command. Try again"));
     }
 
     @Test

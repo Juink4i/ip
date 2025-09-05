@@ -20,11 +20,12 @@ public class UnmarkCommand implements Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         tasks.unmarkTask(taskIndex);
-        System.out.print(Ui.LINE);
-        ui.printMessage("You are undoing this task\n" + tasks.getTask(taskIndex).toString());
-        System.out.println(Ui.LINE);
+        storage.saveTasks(tasks.getTasks());
+        String message = "You are undoing this task\n" + tasks.getTask(taskIndex).toString() + "\n";
+
+        return Ui.LINE + message + Ui.LINE;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.ShowCommand;
 import Jkbot.utils.TaskList;
@@ -40,22 +40,18 @@ class ShowCommandTest {
     }
 
     @Test
-    void executeShowsTasksOnGivenDate() throws Exception {
+    void executeReturnsTasksOnGivenDate() throws Exception {
         ShowCommand command = new ShowCommand("28/8/2025");
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("Submit report"));
-        assertTrue(output.contains("Conference"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("Submit report"));
+        assertTrue(result.contains("Conference"));
     }
 
     @Test
-    void executeShowsNoTasksMessageIfNone() throws Exception {
+    void executeReturnsNoTasksMessageIfNone() throws Exception {
         ShowCommand command = new ShowCommand("1/1/2050");
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("No tasks/events found on 1/1/2050"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("No tasks/events found on 1/1/2050"));
     }
 
     @Test

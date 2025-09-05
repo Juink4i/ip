@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.AddTodoCommand;
 import Jkbot.utils.TaskList;
@@ -36,17 +36,16 @@ class AddTodoCommandTest {
     }
 
     @Test
-    void executeAddsTodoAndPrintsMessage() throws JkBotException {
+    void executeAddsTodoAndReturnsMessage() throws JkBotException {
         AddTodoCommand command = new AddTodoCommand("Read book");
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertEquals(1, taskList.size());
         assertEquals("Read book", taskList.getTask(0).getDesc());
 
-        String output = outContent.toString();
-        assertTrue(output.contains("Got it. I've added this task"));
-        assertTrue(output.contains("Read book"));
-        assertTrue(output.contains("Now you have 1 tasks in the list"));
+        assertTrue(result.contains("Got it. I've added this task"));
+        assertTrue(result.contains("Read book"));
+        assertTrue(result.contains("Now you have 1 tasks in the list"));
     }
 
     @Test

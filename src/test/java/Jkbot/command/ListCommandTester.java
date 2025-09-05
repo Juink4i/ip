@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.ListCommand;
 import Jkbot.utils.TaskList;
@@ -36,25 +36,21 @@ class ListCommandTest {
     }
 
     @Test
-    void executePrintsMessageWhenTaskListEmpty() throws JkBotException {
+    void executeReturnsMessageWhenTaskListEmpty() throws JkBotException {
         ListCommand command = new ListCommand();
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("No tasks in your list yet!"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("No tasks in your list yet!"));
     }
 
     @Test
-    void executePrintsAllTasks() throws JkBotException {
+    void executeReturnsAllTasks() throws JkBotException {
         taskList.addTask(new Todo("Task 1"));
         taskList.addTask(new Todo("Task 2"));
 
         ListCommand command = new ListCommand();
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("1. [T][ ] Task 1") || output.contains("1. Task 1"));
-        assertTrue(output.contains("2. [T][ ] Task 2") || output.contains("2. Task 2"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("1. [T][ ] Task 1") || result.contains("1. Task 1"));
+        assertTrue(result.contains("2. [T][ ] Task 2") || result.contains("2. Task 2"));
     }
 
     @Test

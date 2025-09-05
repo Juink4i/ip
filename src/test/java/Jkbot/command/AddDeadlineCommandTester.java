@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.AddDeadlineCommand;
 import Jkbot.utils.TaskList;
@@ -35,19 +35,18 @@ class AddDeadlineCommandTest {
     }
 
     @Test
-    void executeAddsDeadlineAndPrintsMessage() throws JkBotException {
-        String deadlineArgs = "Deadline Submit report /by 28/8/2025 2359";
+    void executeAddsDeadlineAndReturnsMessage() throws JkBotException {
+        String deadlineArgs = "Submit report /by 28/8/2025 2359";
         AddDeadlineCommand command = new AddDeadlineCommand(deadlineArgs);
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertEquals(1, taskList.size());
         assertTrue(taskList.getTask(0).toString().contains("Submit report"));
-        assertTrue(taskList.getTask(0).toString().contains("Aug 28 2025 11:59 PM"));
+        assertTrue(taskList.getTask(0).toString().toLowerCase().contains("aug 28 2025 11:59 pm"));
 
-        String output = outContent.toString();
-        assertTrue(output.contains("Got it. I've added this deadline"));
-        assertTrue(output.contains("Submit report"));
-        assertTrue(output.contains("Now you have 1 tasks in the list"));
+        assertTrue(result.contains("Got it. I've added this deadline"));
+        assertTrue(result.contains("Submit report"));
+        assertTrue(result.contains("Now you have 1 tasks in the list"));
     }
 
     @Test

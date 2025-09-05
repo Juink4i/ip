@@ -21,12 +21,15 @@ public class DeleteCommand implements Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         Task removedTask = tasks.deleteTask(taskIndex);
-        System.out.print(Ui.LINE);
-        ui.printMessage("I've removed this task:\n" + removedTask.toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list");
-        System.out.print(Ui.LINE);
+        storage.saveTasks(tasks.getTasks());
+        String message;
+        message = Ui.LINE +
+                "I've removed this task:\n" + removedTask.toString() +
+                "\nNow you have " + tasks.size() + " tasks in the list\n" +
+                Ui.LINE;
+        return message;
     }
 
     @Override

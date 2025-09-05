@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.ExitCommand;
 import Jkbot.utils.TaskList;
@@ -38,12 +38,10 @@ class ExitCommandTest {
     }
 
     @Test
-    void executeSavesTasksAndPrintsGoodbye() throws JkBotException {
+    void executeSavesTasksAndReturnsGoodbye() throws JkBotException {
         ExitCommand command = new ExitCommand();
-        command.execute(taskList, ui, storage);
-
-        String output = outContent.toString();
-        assertTrue(output.contains("Bye") || output.contains("Hope to see you again"));
+        String result = command.execute(taskList, ui, storage);
+        assertTrue(result.contains("Bye") || result.contains("Hope to see you again"));
     }
 
     @Test

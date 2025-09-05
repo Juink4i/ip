@@ -54,16 +54,5 @@ class UiTest {
         assertTrue(output.contains("Bye. Hope to see you again soon!"));
     }
 
-    @Test
-    void testReadCommand() {
-        String input = "test input\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-        Ui ui = new Ui();
-        String command = ui.readCommand();
-        assertEquals("test input", command);
-
-        // Optional: restore System.in
-        System.setIn(System.in);
-    }
+    // remove readCommand test since Ui no longer provides it
 }

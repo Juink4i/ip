@@ -19,15 +19,16 @@ public class AddDeadlineCommand implements Command {
         return input;
     }
 
-
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         tasks.addDeadline(input);
-        System.out.println(Ui.LINE);
-        ui.printMessage("Got it. I've added this deadline:\n" +
+        storage.saveTasks(tasks.getTasks());
+
+        String message = "Got it. I've added this deadline:\n" +
                 tasks.getTask(tasks.size() - 1).toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list");
-        System.out.println(Ui.LINE);
+                "\nNow you have " + tasks.size() + " tasks in the list\n";
+
+        return Ui.LINE + message + Ui.LINE;
     }
 
     @Override

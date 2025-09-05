@@ -17,7 +17,7 @@ public interface Command {
      * @param storage the storage component for persistence
      * @throws JkBotException if command execution fails
      */
-    void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException;
+    String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException;
 
     /**
      * Indicates whether this command should exit the application.

@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.UnmarkCommand;
 import Jkbot.utils.TaskList;
@@ -43,14 +43,13 @@ class UnmarkCommandTest {
     }
 
     @Test
-    void executeUnmarksTaskAndPrintsMessage() throws JkBotException {
+    void executeUnmarksTaskAndReturnsMessage() throws JkBotException {
         UnmarkCommand command = new UnmarkCommand(0);
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertFalse(taskList.getTask(0).isDone());
-        String output = outContent.toString();
-        assertTrue(output.contains("You are undoing this task"));
-        assertTrue(output.contains("Test task"));
+        assertTrue(result.contains("You are undoing this task"));
+        assertTrue(result.contains("Test task"));
     }
 
     @Test

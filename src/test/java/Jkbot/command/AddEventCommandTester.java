@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.AddEventCommand;
 import Jkbot.utils.TaskList;
@@ -35,20 +35,20 @@ class AddEventCommandTest {
     }
 
     @Test
-    void executeAddsEventAndPrintsMessage() throws JkBotException {
+    void executeAddsEventAndReturnsMessage() throws JkBotException {
         String eventArgs = "Conference /from 28/8/2025 1000 /to 28/8/2025 1800";
         AddEventCommand command = new AddEventCommand(eventArgs);
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertEquals(1, taskList.size());
         assertTrue(taskList.getTask(0).toString().contains("Conference"));
-        assertTrue(taskList.getTask(0).toString().contains("Aug 28 2025 10:00 AM"));
-        assertTrue(taskList.getTask(0).toString().contains("Aug 28 2025 6:00 PM"));
+        String eventString = taskList.getTask(0).toString().toLowerCase();
+        assertTrue(eventString.contains("aug 28 2025 10:00 am"));
+        assertTrue(eventString.contains("aug 28 2025 6:00 pm"));
 
-        String output = outContent.toString();
-        assertTrue(output.contains("Got it. I've added this event"));
-        assertTrue(output.contains("Conference"));
-        assertTrue(output.contains("Now you have 1 tasks in the list"));
+        assertTrue(result.contains("Got it. I've added this event"));
+        assertTrue(result.contains("Conference"));
+        assertTrue(result.contains("Now you have 1 tasks in the list"));
     }
 
     @Test

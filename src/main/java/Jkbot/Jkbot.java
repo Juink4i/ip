@@ -9,6 +9,7 @@ import Jkbot.utils.Ui;
 
 /**
  * The main chatbot application class that coordinates all components.
+ * Supports both console and GUI modes.
  */
 public class Jkbot {
     private Storage storage;
@@ -23,43 +24,32 @@ public class Jkbot {
         this.parser = new Parser();
     }
 
-    /**
-     * Starts the chatbot application and enters the main command loop.
-     * Continuously reads user input, parses commands, and executes them
-     * until the exit command ("bye") is received.
-     */
-    public void run() {
-        ui.printWelcome();
-
-        boolean isExit = false;
-        while (!isExit) {
-            try {
-                String input = ui.readCommand();
-                if (input.isEmpty()) {
-                    continue;
-                }
-
-                Command command = parser.parse(input);
-                command.execute(tasks, ui, storage);
-                isExit = command.isExit();
-
-            } catch (JkBotException e) {
-                System.out.println(e.getMessage());
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a valid number");
-            } catch (Exception e) {
-                System.out.println("Error: An unexpected error occurred");
-            }
+    public String executeCommand(String input) {
+        try {
+            Command command = Parser.parse(input);
+            return command.execute(tasks, ui, storage);
+        } catch (Exception e) {
+            return Ui.LINE + "Something went wrong!\n" + e.getMessage() + "\n" + Ui.LINE;
         }
     }
 
-    /**
-     * The main entry point of the Jkbot application.
-     * Creates a new Jkbot instance and starts the application.
-     *
-     * @param args command-line arguments (not used)
-     */
-    public static void main(String[] args) {
-        new Jkbot().run();
+    public Parser getParser() {
+        return parser;
+    }
+
+    public TaskList getTasks() {
+        return tasks;
+    }
+
+    public Ui getUi() {
+        return ui;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public String getResponse(String input) {
+        return executeCommand(input);
     }
 }

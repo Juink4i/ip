@@ -3,6 +3,7 @@ package Jkbot.utils;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +13,6 @@ import Jkbot.task.Task;
 import Jkbot.task.Todo;
 import Jkbot.task.Deadline;
 import Jkbot.task.Event;
-
 
 /**
  * Manages the storage and retrieval of tasks from file system.
@@ -73,16 +73,17 @@ public class Storage {
 
             // handles if data file does not exist at the start
             if (!directory.exists()) {
-                directory.mkdir();
+                directory.mkdirs();
             }
 
             // writes every line
-            FileWriter writer = new FileWriter(FILE_PATH);
-            for (Task task : memory) {
-                writer.write(task.toFileFormat() + "\n");
+            try (var writer = Files.newBufferedWriter(Paths.get(FILE_PATH), StandardCharsets.UTF_8)) {
+                for (Task task : memory) {
+                    writer.write(task.toFileFormat());
+                    writer.newLine();
+                }
             }
             System.out.println("Saved! :)");
-            writer.close();
         } catch (IOException e) {
             System.out.println("Error saving file");
         }
@@ -91,13 +92,13 @@ public class Storage {
     /**
      * Parses a single line from the data file into a Task object.
      * Expected format: "T | 0 | description" for Todo,
-     *                 "D | 1 | description | byDate" for Deadline,
-     *                 "E | 0 | description | fromTime | toTime" for Event.
+     * "D | 1 | description | byDate" for Deadline,
+     * "E | 0 | description | fromTime | toTime" for Event.
      *
      * @param input the file line to parse, formatted with " | " separators
      * @return the parsed Task object, or null if input format is invalid
      * @throws ArrayIndexOutOfBoundsException if input doesn't have enough parts
-     * @throws IllegalArgumentException if task type is unrecognized
+     * @throws IllegalArgumentException       if task type is unrecognized
      */
     Task parseTask(String input) {
         try {
@@ -107,18 +108,18 @@ public class Storage {
             String desc = parts[2];
 
             Task task;
-            switch(type) {
-            case "T":
-                task = new Todo(desc);
-                break;
-            case "D":
-                task = new Deadline(desc, parts[3]);
-                break;
-            case "E":
-                task = new Event(desc, parts[3], parts[4]);
-                break;
-            default:
-                return null;
+            switch (type) {
+                case "T":
+                    task = new Todo(desc);
+                    break;
+                case "D":
+                    task = new Deadline(desc, parts[3]);
+                    break;
+                case "E":
+                    task = new Event(desc, parts[3], parts[4]);
+                    break;
+                default:
+                    return null;
             }
 
             if (isDone) {

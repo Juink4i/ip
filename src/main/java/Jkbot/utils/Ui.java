@@ -8,8 +8,8 @@ import java.util.Scanner;
  */
 public class Ui {
     private final Scanner scanner;
-    public static String LINE = "_____________________________________________________________\n";
-    public static String OPENING = LINE + "Hello! I'm jkbot\nWhat can I do for you?\n" + LINE;
+    public static String LINE = "________________________________\n";
+    public static String OPENING = LINE + "Hello! I'm NaiLongBot\nWhat can I do for you?\n" + LINE;
     public static String CLOSING = LINE + "Bye. Hope to see you again soon!" + "\n" + LINE;
 
     /**
@@ -27,21 +27,15 @@ public class Ui {
         System.out.println(OPENING);
     }
 
+    public String getOPENING() {
+        return OPENING;
+    }
+
     /**
      * Prints out LINE.
      */
     public void printLine() {
         System.out.print(LINE);
-    }
-
-    /**
-     * Prints out "input: " for users to input commands.
-     *
-     * @return users input in String.
-     */
-    public String readCommand() {
-        System.out.print("input: ");
-        return scanner.nextLine().trim();
     }
 
     /**

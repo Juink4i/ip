@@ -73,7 +73,7 @@ public class Parser {
     private static void validateNotEmpty(String arguments, String format) throws EmptyDescriptionException {
         if (arguments.trim().isEmpty()) {
             System.out.print(Ui.LINE);
-            throw new EmptyDescriptionException("Error: Please specify - " + format + "\n" + Ui.LINE);
+            throw new EmptyDescriptionException("Error: Please specify - " + format);
         }
     }
 }

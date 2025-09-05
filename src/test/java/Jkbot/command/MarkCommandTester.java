@@ -1,4 +1,4 @@
-package Jkbot.tests;
+package Jkbot.command;
 
 import Jkbot.command.MarkCommand;
 import Jkbot.utils.TaskList;
@@ -25,7 +25,7 @@ class MarkCommandTest {
     @BeforeEach
     void setUp() throws Exception {
         taskList = new TaskList();
-        taskList.addTask(new Todo("Test task"));  // Initially not done
+        taskList.addTask(new Todo("Test task")); // Initially not done
 
         ui = new Ui();
         storage = new Storage();
@@ -39,14 +39,13 @@ class MarkCommandTest {
     }
 
     @Test
-    void executeMarksTaskAndPrintsMessage() throws JkBotException {
+    void executeMarksTaskAndReturnsMessage() throws JkBotException {
         MarkCommand command = new MarkCommand(0);
-        command.execute(taskList, ui, storage);
+        String result = command.execute(taskList, ui, storage);
 
         assertTrue(taskList.getTask(0).isDone());
-        String output = outContent.toString();
-        assertTrue(output.contains("Good job for completing!!!"));
-        assertTrue(output.contains("Test task"));
+        assertTrue(result.contains("Good job for completing!!!"));
+        assertTrue(result.contains("Test task"));
     }
 
     @Test

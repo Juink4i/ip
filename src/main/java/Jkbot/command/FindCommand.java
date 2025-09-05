@@ -8,7 +8,7 @@ import Jkbot.utils.Ui;
 /**
  * Command to add a find word in desc.
  */
-public class FindCommand implements Command{
+public class FindCommand implements Command {
     private String query;
 
     public FindCommand(String query) {
@@ -16,20 +16,21 @@ public class FindCommand implements Command{
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+        StringBuilder message = new StringBuilder("");
         int index = 1;
         if (tasks.isEmpty()) {
-            ui.printMessage("No tasks in your list yet!");
+            message = new StringBuilder("No tasks in your list yet!");
         } else {
-            System.out.print(Ui.LINE);
             for (int i = 0; i < tasks.size(); i++) {
                 if (tasks.getTask(i).getDescription().contains(query)) {
-                    ui.printMessage((index) + ". " + tasks.getTask(i));
+                    String taskLine = index + ". " + tasks.getTask(i);
+                    message.append(taskLine).append("\n");
                     index++;
                 }
             }
         }
-        System.out.print(Ui.LINE);
+        return Ui.LINE + message + Ui.LINE;
     }
 
     @Override

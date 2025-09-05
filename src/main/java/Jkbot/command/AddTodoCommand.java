@@ -15,18 +15,20 @@ public class AddTodoCommand implements Command {
         this.description = description;
     }
 
-    public String getDescription() {  // <-- add this getter
+    public String getDescription() { // <-- add this getter
         return description;
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         tasks.addTodo(description);
-        System.out.println(Ui.LINE);
-        ui.printMessage("Got it. I've added this task:\n" +
+        storage.saveTasks(tasks.getTasks());
+
+        String message = "Got it. I've added this task:\n" +
                 tasks.getTask(tasks.size() - 1).toString() +
-                "\nNow you have " + tasks.size() + " tasks in the list");
-        System.out.println(Ui.LINE);
+                "\nNow you have " + tasks.size() + " tasks in the list\n";
+
+        return Ui.LINE + message + Ui.LINE;
     }
 
     @Override
