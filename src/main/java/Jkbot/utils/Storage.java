@@ -1,7 +1,6 @@
 package Jkbot.utils;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -9,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 import Jkbot.task.Task;
 import Jkbot.task.Todo;
 import Jkbot.task.Deadline;
@@ -109,17 +109,17 @@ public class Storage {
 
             Task task;
             switch (type) {
-                case "T":
-                    task = new Todo(desc);
-                    break;
-                case "D":
-                    task = new Deadline(desc, parts[3]);
-                    break;
-                case "E":
-                    task = new Event(desc, parts[3], parts[4]);
-                    break;
-                default:
-                    return null;
+            case "T":
+                task = new Todo(desc);
+                break;
+            case "D":
+                task = new Deadline(desc, parts[3]);
+                break;
+            case "E":
+                task = new Event(desc, parts[3], parts[4]);
+                break;
+            default:
+                return null;
             }
 
             if (isDone) {

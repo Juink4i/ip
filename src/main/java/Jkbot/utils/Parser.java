@@ -12,11 +12,32 @@ import Jkbot.command.MarkCommand;
 import Jkbot.command.ShowCommand;
 import Jkbot.command.UnknownCommand;
 import Jkbot.command.UnmarkCommand;
-import Jkbot.exception.JkBotException;
 import Jkbot.exception.EmptyDescriptionException;
+import Jkbot.exception.JkBotException;
 
+/**
+ * The {@code Parser} class is responsible for interpreting user input
+ * and converting it into a specific {@link Command} that the bot can execute.
+ * It reads the first word of the input to determine the type of command,
+ * validates any required arguments, and then constructs the appropriate {@link Command} object
+ * If the input does not match any known command, an {@link UnknownCommand}
+ * is returned. If the input is empty or missing required arguments, and {@link EmptyDescriptionException} is thrown.
+ *
+ * This class also provides a private helper method {@code validateNotEmpty}
+ * to ensure that arguments are not missing for commands that require them.
+ *
+ * @see Command
+ * @see JkBotException
+ * @see EmptyDescriptionException
+ */
 public class Parser {
-
+    /**
+     * Reads the users input based on the first word of input and executes the respective command
+     *
+     * @param input the users input
+     * @return a specific Command to execute
+     * @throws JkBotException if there is an error while parsing the input
+     */
     public static Command parse(String input) throws JkBotException {
         if (input.isEmpty()) {
             throw new EmptyDescriptionException("Empty command");
@@ -70,6 +91,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Reads the users input based on the first word of input and executes the respective command
+     *
+     * @param arguments the words after the command word in the input
+     * @param format the supposed format for input based on the inputs first word
+     * @throws EmptyDescriptionException if the description of the input is empty
+     */
     private static void validateNotEmpty(String arguments, String format) throws EmptyDescriptionException {
         if (arguments.trim().isEmpty()) {
             System.out.print(Ui.LINE);
