@@ -32,6 +32,10 @@ public class TaskList {
         memory.add(task);
     }
 
+    public ArrayList<Task> getMemory() {
+        return this.memory;
+    }
+
     /**
      * Marks the task as complete.
      *
@@ -205,7 +209,6 @@ public class TaskList {
             System.out.print(Ui.LINE);
             result.append("No tasks/events found on ").append(queryDate.format(inputFormatter) + "\n" + Ui.LINE);
         }
-
         return result.toString();
     }
 }

@@ -1,5 +1,7 @@
 package Jkbot.task;
 
+import java.time.LocalDateTime;
+
 /**
  * General task
  * Contains methods and variables applicable to all sub category of task
@@ -43,4 +45,6 @@ public abstract class Task {
     public String toString() {
         return getStatusIcon() + " " + getDesc();
     }
+
+    public abstract LocalDateTime getDate();
 }

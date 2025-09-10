@@ -10,6 +10,7 @@ import Jkbot.command.FindCommand;
 import Jkbot.command.ListCommand;
 import Jkbot.command.MarkCommand;
 import Jkbot.command.ShowCommand;
+import Jkbot.command.SortCommand;
 import Jkbot.command.UnknownCommand;
 import Jkbot.command.UnmarkCommand;
 import Jkbot.exception.EmptyDescriptionException;
@@ -85,6 +86,9 @@ public class Parser {
         case "find":
             validateNotEmpty(arguments, "find [key words]");
             return new FindCommand(arguments);
+
+        case "sort":
+            return new SortCommand();
 
         default:
             return new UnknownCommand();

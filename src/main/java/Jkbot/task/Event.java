@@ -33,6 +33,10 @@ public class Event extends Task{
         }
     }
 
+    public LocalDateTime getDate() {
+        return startTime;
+    }
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
