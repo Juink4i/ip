@@ -4,10 +4,23 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a task scheduled within a specific time range.
+ * An Event stores a task description,
+ * a start time, and an end time. Both times are parsed from raw string inputs into LocalDateTime objects
+ */
 public class Event extends Task{
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    /**
+     * Constructs an Event task with the specified description,
+     * start time, and end time.
+     *
+     * @param description   the description of the event
+     * @param rawStartTime  the start time as a string in the format @code d/M/yyyy HHmm
+     * @param rawEndTime    the end time as a string in the format d/M/yyyy HHmm
+     * @throws IllegalArgumentException if either time is in an invalid format
+     */
     public Event(String description, String rawStartTime, String rawEndTime) {
         super(description);
 
