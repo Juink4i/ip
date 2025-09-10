@@ -38,7 +38,8 @@ public class Jkbot {
             Command command = Parser.parse(input);
             return command.execute(tasks, ui, storage);
         } catch (Exception e) {
-            return Ui.LINE + "Something went wrong!\n" + e.getMessage() + "\n" + Ui.LINE;
+            String result = Ui.LINE + "Something went wrong!\n" + e.getMessage() + "\n" + Ui.LINE;
+            return result;
         }
     }
 
