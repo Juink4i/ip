@@ -40,13 +40,10 @@ public class Storage {
 
             for (String line : lines) {
                 Task task = parseTask(line);
-                if (!line.isEmpty()) {
-                    // System.out.printf(line);
-                    if (task != null) {
-                        memory.add(task);
-                    } else {
-                        corruptedLines++;
-                    }
+                if (!line.isEmpty() && task != null) {
+                    memory.add(task);
+                } else {
+                    corruptedLines++;
                 }
             }
             if (corruptedLines > 0) {
