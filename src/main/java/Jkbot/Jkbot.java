@@ -1,6 +1,7 @@
 package Jkbot;
 
 import Jkbot.command.Command;
+import Jkbot.exception.JkBotException;
 import Jkbot.utils.Parser;
 import Jkbot.utils.Storage;
 import Jkbot.utils.TaskList;
@@ -15,31 +16,25 @@ public class Jkbot {
     private TaskList tasks;
     private Ui ui;
     private Parser parser;
-    /**
-     * Constructor for the chatbot.
-     */
+
     public Jkbot() {
         this.ui = new Ui();
         this.storage = new Storage();
         this.tasks = new TaskList(storage.loadTasks());
         this.parser = new Parser();
     }
-    /**
-     * Parses the input from the user and results in its execution
-     *
-     * @param input the command that the user has typed and entered
-     * @return a formatted string message confirming that the deadline was added
-     * @throws Exception if there is an error while executing command "input"
-     */
-    public String executeCommand(String input) {
-        assert input != null && !input.isBlank(); // if input is null or blank, result in error
 
+    public String executeCommand(String input) {
         try {
             Command command = Parser.parse(input);
             return command.execute(tasks, ui, storage);
         } catch (Exception e) {
             return Ui.LINE + "Something went wrong!\n" + e.getMessage() + "\n" + Ui.LINE;
         }
+    }
+
+    public Parser getParser() {
+        return parser;
     }
 
     public TaskList getTasks() {
