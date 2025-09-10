@@ -28,10 +28,6 @@ public class TaskList {
         this.memory = memory;
     }
 
-    public ArrayList<Task> getMemory() {
-        return memory;
-    }
-
     public void addTask(Task task) {
         memory.add(task);
     }
