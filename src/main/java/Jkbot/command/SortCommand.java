@@ -16,6 +16,8 @@ public class SortCommand implements Command {
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws JkBotException {
         int size = tasks.size();
+
+        // can abstract out?
         for (int i = 0; i < size - 1; i++) {
             for (int j = 0; j < size - i - 1; j++) {
                 Task currentTask = tasks.getTask(j);
@@ -33,6 +35,8 @@ public class SortCommand implements Command {
 
     public void swap(TaskList tasks, int current, int next) throws InvalidTaskNumberException {
         ArrayList<Task> memory = tasks.getMemory();
+
+        // can abstract out?
         if (current < 0 || next < 0 || current >= memory.size() || next >= memory.size()) {
             throw new InvalidTaskNumberException("Invalid task index for swap!");
         }
