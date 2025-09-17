@@ -10,7 +10,7 @@ import nailongbot.utils.Ui;
  * The main chatbot application class that coordinates all components.
  * Supports both console and GUI modes.
  */
-public class Jkbot {
+public class NaiLong {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -18,7 +18,7 @@ public class Jkbot {
     /**
      * Constructor for the chatbot.
      */
-    public Jkbot() {
+    public NaiLong() {
         this.ui = new Ui();
         this.storage = new Storage();
         this.tasks = new TaskList(storage.loadTasks());

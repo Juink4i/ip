@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.14'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
@@ -8,12 +9,21 @@ repositories {
     mavenCentral()
 }
 
+javafx {
+    version = "20" // match your JavaFX version
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
 application {
-    mainClass.set("Jkbot.Launcher") // your full package + class name
+    mainClass.set("nailongbot.Launcher") // your full package + class name
 }
 
 shadowJar {
-    archiveFileName = 'Jkbot.jar'
+    archiveBaseName.set('nailongbot')
+    archiveVersion.set('1.0')
+    manifest {
+        attributes 'Main-Class': 'nailongbot.Launcher'
+    }
 }
 
 dependencies {

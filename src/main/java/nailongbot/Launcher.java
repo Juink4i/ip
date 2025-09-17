@@ -1,7 +1,8 @@
 package nailongbot;
 
-import nailongbot.application.Main;
 import javafx.application.Application;
+import nailongbot.application.Main;
+
 
 /**
  * A launcher class to workaround classpath issues.

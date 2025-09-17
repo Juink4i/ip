@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import nailongbot.Jkbot;
+import nailongbot.NaiLong;
 
 /**
  * Controller for the main GUI.
@@ -24,7 +24,7 @@ public class MainWindow extends AnchorPane {
     @FXML
         private Button sendButton;
 
-    private Jkbot jkbot;
+    private NaiLong jkbot;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/image/user_face.jpg"));
     private Image botImage = new Image(this.getClass().getResourceAsStream("/image/bot_face.png"));
@@ -35,7 +35,7 @@ public class MainWindow extends AnchorPane {
     }
 
     /** Injects the Duke instance */
-    public void setJkbot(Jkbot d) {
+    public void setJkbot(NaiLong d) {
         jkbot = d;
         String openingMsg = jkbot.getUi().getOpening();
         dialogContainer.getChildren().add(
