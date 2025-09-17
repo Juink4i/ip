@@ -1,13 +1,13 @@
-## Jkbot User Guide
+## nailongbot User Guide
 
-Jkbot is a simple task manager chatbot. It helps you keep track of your tasks via commands typed into the app.
+nailongbot is a simple task manager chatbot. It helps you keep track of your tasks via commands typed into the app.
 
 This guide covers installation, basic usage, and all available features with examples and expected outputs.
 
 ### Quick start
 
 - Ensure you have Java 17 installed.
-- Download the release JAR (`ip.jar` or `Jkbot.jar`).
+- Download the release JAR (`ip.jar` or `nailongbot.jar`).
 - Run from a terminal in the JAR directory:
 
 ```bash
@@ -19,14 +19,14 @@ You should see the welcome message and a prompt. Type commands and press Enter.
 ### Data storage
 
 - Tasks are saved automatically to `data/saved_tasks.txt` in the app directory when the app exits normally.
-- On next start, Jkbot loads tasks from that file. Corrupted lines are skipped.
+- On next start, nailongbot loads tasks from that file. Corrupted lines are skipped.
 
 ### Command overview
 
 - `list`: Show all tasks
 - `todo <DESCRIPTION>`: Add a todo task
-- `deadline <DESCRIPTION> /by <WHEN>`: Add a deadline
-- `event <DESCRIPTION> /from <START> /to <END>`: Add an event
+- `deadline <DESCRIPTION> /by <WHEN>`: Add a deadline (WHEN format: d/M/yyyy HHmm)
+- `event <DESCRIPTION> /from <START> /to <END>`: Add an event (START/END format: d/M/yyyy HHmm)
 - `mark <INDEX>`: Mark a task as done
 - `unmark <INDEX>`: Mark a task as not done
 - `delete <INDEX>`: Delete a task
@@ -39,7 +39,7 @@ Notes:
 
 - `INDEX` is 1-based in the UI. Internally it is converted to 0-based.
 - Dates for `show` use day/month/year, e.g. `28/8/2025`.
-- `WHEN`, `START`, `END` are free-form in input; they will be stored and displayed as entered by you (date-aware features apply when applicable).
+- `WHEN`, `START`, `END` must use format `d/M/yyyy HHmm`, e.g. `28/8/2025 1800` for 6:00 PM.
 
 ---
 
@@ -91,14 +91,14 @@ Adds a deadline task with a due time/date.
 Example:
 
 ```text
-deadline submit paper /by 28/8/2025 23:59
+deadline submit paper /by 28/8/2025 2359
 ```
 
 Expected output:
 
 ```text
 ________________________________
-Added: [D][ ] submit paper (by: 28/8/2025 23:59)
+Added: [D][ ] submit paper (by: 28/8/2025 2359)
 You now have 2 tasks in the list.
 ________________________________
 ```
@@ -110,14 +110,14 @@ Adds an event spanning a start and end time.
 Example:
 
 ```text
-event conference /from 28/8/2025 09:00 /to 29/8/2025 17:00
+event conference /from 28/8/2025 0900 /to 29/8/2025 1700
 ```
 
 Expected output:
 
 ```text
 ________________________________
-Added: [E][ ] conference (from: 28/8/2025 09:00 to: 29/8/2025 17:00)
+Added: [E][ ] conference (from: 28/8/2025 0900 to: 29/8/2025 1700)
 You now have 3 tasks in the list.
 ________________________________
 ```
@@ -174,7 +174,7 @@ Expected output:
 
 ```text
 ________________________________
-Removed: [D][ ] submit paper (by: 28/8/2025 23:59)
+Removed: [D][ ] submit paper (by: 28/8/2025 2359)
 You now have 2 tasks in the list.
 ________________________________
 ```
@@ -193,7 +193,7 @@ Expected output:
 
 ```text
 ________________________________
-[1] [E][ ] conference (from: 28/8/2025 09:00 to: 29/8/2025 17:00)
+[1] [E][ ] conference (from: 28/8/2025 0900 to: 29/8/2025 1700)
 ________________________________
 ```
 
@@ -211,8 +211,8 @@ Expected output when tasks exist:
 
 ```text
 ________________________________
-[D][ ] submit paper (by: 28/8/2025 23:59)
-[E][ ] conference (from: 28/8/2025 09:00 to: 29/8/2025 17:00)
+[D][ ] submit paper (by: 28/8/2025 2359)
+[E][ ] conference (from: 28/8/2025 0900 to: 29/8/2025 1700)
 ________________________________
 ```
 
@@ -257,7 +257,7 @@ ________________________________
 
 ## Error handling and tips
 
-- If you omit required parts, Jkbot will show a helpful message, e.g., `Error: Please specify - deadline [description] /by [time]`.
+- If you omit required parts, nailongbot will show a helpful message, e.g., `Error: Please specify - deadline [description] /by [time]`.
 - Use the exact tokens `/by`, `/from`, `/to` in `deadline` and `event` commands.
 - Indices are positive integers as shown by `list` (1, 2, 3, ...).
 - Extra spaces are generally tolerated between the command and arguments.
